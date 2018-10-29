@@ -68,3 +68,4 @@ cd $agentInstallationPath
 
 Write-logAndVerbose "`tConfiguration complete. Installing Azure Module"
 install-module "AzureRM" -Force
+Write-logAndVerbose "`tAzure Module installed"
