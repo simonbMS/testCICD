@@ -1,0 +1,15 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "workspaceName": {
+      "value": "maas-dev-we-law-001"
+    },
+    "serviceTier": {
+      "value": "PerGB2018"
+    },
+    "dataRetention": {
+      "value": 30
+    }
+  }
+}
