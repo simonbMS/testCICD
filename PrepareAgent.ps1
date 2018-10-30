@@ -1,4 +1,4 @@
-﻿param(
+param(
     [string] $vstsAccount,
     [string] $personalAccessToken,
     [string] $poolName,
@@ -15,8 +15,6 @@ if(!(Test-Path $logDir -PathType Container)){ md $logDir}
 if(!(Test-Path $agentTempFolderName -PathType Container)){ md $agentTempFolderName}
 if(!(Test-Path $agentInstallationPath -PathType Container)){ md $agentInstallationPath}
 if(!(Test-Path "$agentInstallationPath\_work" -PathType Container)){ md "$agentInstallationPath\_work"}
-#######
-
 
 $dateTime = (Get-Date).ToString('yyyy-MM-dd-HHmm')
 $logPath = "$($logDir)InstallAgent$($dateTime).txt"
@@ -29,6 +27,14 @@ Function Write-logAndVerbose {
     Write-Verbose $message -Verbose
     "$(Get-Date -Format "yyyy-MM-dd HH:mm:ss"),$message" | Out-File -FilePath $logPath -Append
 }
+
+Write-logAndVerbose "`tSetting up windows Update settings"
+####Set up windows update
+# Set to automatically download and schedule update installation (Value 4) 
+Set-ItemProperty -Path HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU -Name AUOptions -Value 4
+# Every day (zero)
+Set-ItemProperty -Path HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU -Name ScheduledInstallDay -Value 0
+####
 
 $serverUrl = "https://$vstsAccount.visualstudio.com"
 Write-logAndVerbose "`tServer URL: $serverUrl"
